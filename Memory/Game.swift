@@ -28,6 +28,9 @@ class Game {
         for item in items{
             board[findFreePosition()] = item
         }
+        score = 0
+        nSolvedItems = 0
+        clearSelection()
     }
     
     func getItem(position: Int) -> Int{

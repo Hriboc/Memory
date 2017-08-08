@@ -104,7 +104,7 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 let prevCellIdxPath = IndexPath(item: self.game.getFirstSelection(), section: 0)
                 let previousCell = collectionView.cellForItem(at: prevCellIdxPath)
                 // call timer to turn back chosen items
-                Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { (timer) in
+                Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
                     cell?.backgroundColor = UIColor.lightGray
                     previousCell?.backgroundColor = UIColor.lightGray
                 }
@@ -115,12 +115,15 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         if game.isGameOver() {
             // Show enter name
+            alert()
         }
     }
     
     @IBAction func newGame(_ sender: UIButton) {
         game.newGame()
         gameCollectionView.reloadData()
+        scoreLabel.text = String(game.score)
+        
     }
     
     private func setColor(item: Int) -> UIColor {
@@ -150,27 +153,37 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
     }
     
-    /*func delay(delay: Double, closure: ()->()) {
-        dispatch_after(
-            dispatch_time(
-                DISPATCH_TIME_NOW,
-                Int64(delay * Double(NSEC_PER_SEC))
-            ),
-            dispatch_get_main_queue(),
-            closure
-        )
-    }*/
-    /*
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == self.textBox {
-            self.dropDown.isHidden = false
-            //if you dont want the users to se the keyboard type:
+    private func alert(){
+        // Create alert controller
+        let alertController = UIAlertController(title: "Score: \(game.score)", message: "Enter your name", preferredStyle: UIAlertControllerStyle.alert)
+        // Create button Ok
+        let ok = UIAlertAction(title: "Ok", style: .default, handler: {(action) -> Void in
             
-            textField.endEditing(true)
+            //print(nameTextField.text ?? "Unknown")
+            // show high score view
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let viewCtrl = storyboard.instantiateViewController(withIdentifier: "HighScoreCtrl") as! HighScoreViewController
+            let name = alertController.textFields![0] as UITextField
+            viewCtrl.player = name.text!
+            viewCtrl.score = self.game.score
+            self.navigationController?.show(viewCtrl, sender: self)
+        })
+        // Create button Cancel
+        let cancel = UIAlertAction(title: "No", style: .cancel) { (action:UIAlertAction!) in
+            print("you have pressed the No button")
+            //Call another alert here
         }
+        // add buttons to controller
+        alertController.addAction(ok)
+        alertController.addAction(cancel)
         
-    }*/
+        // add text field
+        alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
+        })
+        
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
 
     /*
     // MARK: - Navigation

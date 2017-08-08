@@ -16,6 +16,7 @@
 		625755C11F3341D000DD4CB7 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625755C01F3341D000DD4CB7 /* GameViewController.swift */; };
 		625755C41F33424900DD4CB7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625755C31F33424900DD4CB7 /* Game.swift */; };
 		626D8D201F34CC3B0073A842 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626D8D1F1F34CC3B0073A842 /* CollectionViewCell.swift */; };
+		62F742771F39D78900417669 /* HighScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F742761F39D78900417669 /* HighScoreViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		625755C01F3341D000DD4CB7 /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		625755C31F33424900DD4CB7 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		626D8D1F1F34CC3B0073A842 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		62F742761F39D78900417669 /* HighScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScoreViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 				625755A41F33412000DD4CB7 /* Memory.xcdatamodeld */,
 				625755C01F3341D000DD4CB7 /* GameViewController.swift */,
 				626D8D1F1F34CC3B0073A842 /* CollectionViewCell.swift */,
+				62F742761F39D78900417669 /* HighScoreViewController.swift */,
 			);
 			path = Memory;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				625755C11F3341D000DD4CB7 /* GameViewController.swift in Sources */,
 				625755A61F33412000DD4CB7 /* Memory.xcdatamodeld in Sources */,
 				625755C41F33424900DD4CB7 /* Game.swift in Sources */,
+				62F742771F39D78900417669 /* HighScoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
