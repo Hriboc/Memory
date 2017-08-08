@@ -9,29 +9,61 @@
 import Foundation
 
 class Game {
-    var board = Array(repeating: 0, count: 20)
-    var selectedPositions = [Int]()
+    private let items = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10]
     
-    let items = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10]
+    private var board = [Int]()//= Array(repeating: 0, count: 20)
+    private var selectedPositions = [Int]()
+    private var nSolvedItems = 0
+    
+    var score = 0
+    
+    init() {
+        //board = Array(repeating: 0, count: items.count)
+        newGame()
+    }
     
     func newGame(){
-        board = Array(repeating: 0, count: 20)
+        board = Array(repeating: 0, count: items.count)
         
         for item in items{
             board[findFreePosition()] = item
         }
     }
     
+    func getItem(position: Int) -> Int{
+        return board[position]
+    }
+    
     func addSelection(position: Int){
         selectedPositions.append(position)
+    }
+    
+    func getFirstSelection() -> Int {
+        return selectedPositions[0]
+    }
+    
+    func clearSelection() {
+        selectedPositions.removeAll()
     }
     
     func isSelectedPair() -> Bool {
         return selectedPositions.count == 2
     }
     
-    func checkSelectedItems() -> Bool {
+    func areSelectedItemsEqual() -> Bool {
         return board[selectedPositions[0]] == board[selectedPositions[1]]
+    }
+    
+    func getBoardSize() -> Int {
+        return board.count
+    }
+    
+    func markSolvedItems() {
+        nSolvedItems += 2
+    }
+    
+    func isGameOver() -> Bool {
+        return nSolvedItems == items.count
     }
     
     private func findFreePosition() -> Int {
