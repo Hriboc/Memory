@@ -66,7 +66,7 @@ class Game {
     }
     
     func isGameOver() -> Bool {
-        return nSolvedItems == items.count
+        return nSolvedItems == items.count // 2
     }
     
     private func findFreePosition() -> Int {

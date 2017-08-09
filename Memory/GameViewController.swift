@@ -169,7 +169,7 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             self.navigationController?.show(viewCtrl, sender: self)
         })
         // Create button Cancel
-        let cancel = UIAlertAction(title: "No", style: .cancel) { (action:UIAlertAction!) in
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
             print("you have pressed the No button")
             //Call another alert here
         }
