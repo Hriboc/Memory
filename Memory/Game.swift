@@ -75,7 +75,7 @@ class Game {
         
         //find a free position
         while board[pos] != 0 {
-            pos += 1;
+            pos += 3;
             if pos >= 20 {
                 pos -= 20
             }

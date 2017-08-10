@@ -14,14 +14,20 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var gameCollectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     
-    let gameTypes = ["colors", "smilies", "numbers"]
+    let colors = [UIColor.blue, UIColor.red, UIColor.black, UIColor.brown, UIColor.cyan,
+        UIColor.green, UIColor.yellow, UIColor.purple, UIColor.orange,UIColor.magenta]
+    
+    let gameTypes = ["color", "smiley", "number"]
+    var selectedGameType = ""
     
     var game = Game()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        // Set the selected game type
+        let row = gameTypePicker.selectedRow(inComponent: 0)
+        selectedGameType = gameTypes[row]
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,21 +38,17 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     // --- Game Type Picker
     public func numberOfComponents(in pickerView: UIPickerView) -> Int{
         return 1
-        
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
-        
         return gameTypes.count
-        
     }
     
-    // vet inte vad denna gör
+    // Shows game type in picker UI, i think
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        
         self.view.endEditing(true)
-        return gameTypes[row]
         
+        return gameTypes[row]
     }
     
     // använd denn för att hämta val av spel
@@ -54,7 +56,8 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         //self.textBox.text = self.list[row]
         //self.gameTypePicker.isHidden = true
-        
+        //let row = gameTypePicker.selectedRow(inComponent: 0)
+        selectedGameType = gameTypes[row]
     }
     
     // --- Collection View
@@ -74,9 +77,8 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         // get a reference to our storyboard cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
         
-        // Use the outlet in our custom class to get a reference to the UILabel in the cell
-        //cell.imgItem.image = game.board[indexPath.item]
-        cell.backgroundColor = UIColor.lightGray//setColor(item: game.board[indexPath.item]) // make cell more visible in our example project
+        cell.imgItem.image = nil
+        cell.backgroundColor = UIColor.lightGray
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
         
@@ -87,9 +89,16 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         // handle tap events
-        let cell = collectionView.cellForItem(at: indexPath)
+        let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         let item = game.getItem(position: indexPath.item)
-        cell?.backgroundColor = setColor(item: item)
+        
+        if selectedGameType == "color" {
+            cell.backgroundColor = setItemColor(item: item)
+        }
+        else { // smiley, number
+            cell.imgItem.image = setItemImage(item: item)
+            cell.backgroundColor = UIColor.white
+        }
 
         print("You selected cell #\(indexPath.item)!")
         game.addSelection(position: indexPath.item)
@@ -102,11 +111,15 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
                 game.score -= 1
                 // get ref to previous item selected
                 let prevCellIdxPath = IndexPath(item: self.game.getFirstSelection(), section: 0)
-                let previousCell = collectionView.cellForItem(at: prevCellIdxPath)
+                let previousCell = collectionView.cellForItem(at: prevCellIdxPath) as! CollectionViewCell
                 // call timer to turn back chosen items
                 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { (timer) in
-                    cell?.backgroundColor = UIColor.lightGray
-                    previousCell?.backgroundColor = UIColor.lightGray
+                    // remove images
+                    cell.imgItem.image = nil
+                    previousCell.imgItem.image = nil
+                    // hide items
+                    cell.backgroundColor = UIColor.lightGray
+                    previousCell.backgroundColor = UIColor.lightGray
                 }
             }
             game.clearSelection()
@@ -126,31 +139,13 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
     }
     
-    private func setColor(item: Int) -> UIColor {
-        switch item {
-            case 1:
-                return UIColor.blue
-            case 2:
-                return UIColor.red
-            case 3:
-                return UIColor.black
-            case 4:
-                return UIColor.brown
-            case 5:
-                return UIColor.cyan
-            case 6:
-                return UIColor.green
-            case 7:
-                return UIColor.yellow
-            case 8:
-                return UIColor.purple
-            case 9:
-                return UIColor.orange
-            case 10:
-                return UIColor.magenta
-            default:
-                return UIColor.white
-        }
+    private func setItemColor(item: Int) -> UIColor {
+        return colors[item-1]
+    }
+    
+    // Concat to make an image, e.g. image "smilie3"
+    private func setItemImage(item: Int) -> UIImage {
+        return UIImage(named:"\(selectedGameType)\(item)")!
     }
     
     private func alert(){
