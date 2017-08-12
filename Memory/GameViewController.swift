@@ -14,6 +14,12 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var gameCollectionView: UICollectionView!
     @IBOutlet weak var scoreLabel: UILabel!
     
+    @IBOutlet weak var newGameButton: UIButton!
+    @IBOutlet weak var showHighScoreButton: UIButton!
+    
+    
+    let itemCellID = "ItemCell" // Reusable cell ID for collection view
+    
     let colors = [UIColor.blue, UIColor.red, UIColor.black, UIColor.brown, UIColor.cyan,
         UIColor.green, UIColor.yellow, UIColor.purple, UIColor.orange,UIColor.magenta]
     
@@ -28,14 +34,14 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         // Set the selected game type
         let row = gameTypePicker.selectedRow(inComponent: 0)
         selectedGameType = gameTypes[row]
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        // Style buttons
+        newGameButton.layer.cornerRadius = 6
+        showHighScoreButton.layer.cornerRadius = 6
     }
     
-    // --- Game Type Picker
+    // --- Functions for Game Type Picker ---
+    
     public func numberOfComponents(in pickerView: UIPickerView) -> Int{
         return 1
     }
@@ -51,44 +57,35 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         return gameTypes[row]
     }
     
-    // använd denn för att hämta val av spel
+    // Change game type
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        
-        //self.textBox.text = self.list[row]
-        //self.gameTypePicker.isHidden = true
-        //let row = gameTypePicker.selectedRow(inComponent: 0)
         selectedGameType = gameTypes[row]
     }
     
-    // --- Collection View
-    let reuseIdentifier = "ItemCell" // also enter this string as the cell identifier in the storyboard
-    //var items = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"]
-    
-    // MARK: - UICollectionViewDataSource protocol
+    // --- Functions for Collection View ----
     
     // tell the collection view how many cells to make
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return game.getBoardSize() // self.items.count
+        return game.getBoardSize()
     }
     
     // make a cell for each cell index path
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         // get a reference to our storyboard cell
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath as IndexPath) as! CollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: itemCellID, for: indexPath as IndexPath) as! CollectionViewCell
         
         cell.imgItem.image = nil
         cell.backgroundColor = UIColor.lightGray
-        cell.layer.borderWidth = 1
+        //cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
         
         return cell
     }
     
-    // MARK: - UICollectionViewDelegate protocol
-    
+    // handles tap evens
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // handle tap events
+        
         let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
         let item = game.getItem(position: indexPath.item)
         
@@ -99,8 +96,6 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             cell.imgItem.image = setItemImage(item: item)
             cell.backgroundColor = UIColor.white
         }
-
-        print("You selected cell #\(indexPath.item)!")
         game.addSelection(position: indexPath.item)
         
         if game.isSelectedPair() {
@@ -127,8 +122,7 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         }
         
         if game.isGameOver() {
-            // Show enter name
-            alert()
+            alertPlayer()
         }
     }
     
@@ -140,54 +134,43 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     }
     
     private func setItemColor(item: Int) -> UIColor {
-        return colors[item-1]
+        return colors[item-1] // items is 1 to 10 but array index is 0 to 9
     }
     
-    // Concat to make an image, e.g. image "smilie3"
+    // Concat to make an image, e.g. "smilie3"
     private func setItemImage(item: Int) -> UIImage {
         return UIImage(named:"\(selectedGameType)\(item)")!
     }
     
-    private func alert(){
+    // Popups a window so player can enter a name. If button OK is pressed, high score view is shown
+    private func alertPlayer(){
         // Create alert controller
         let alertController = UIAlertController(title: "Score: \(game.score)", message: "Enter your name", preferredStyle: UIAlertControllerStyle.alert)
+        
         // Create button Ok
         let ok = UIAlertAction(title: "Ok", style: .default, handler: {(action) -> Void in
-            
-            //print(nameTextField.text ?? "Unknown")
-            // show high score view
+            // create high score view
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let viewCtrl = storyboard.instantiateViewController(withIdentifier: "HighScoreCtrl") as! HighScoreViewController
+            
+            // get the name of the player
             let name = alertController.textFields![0] as UITextField
             viewCtrl.player = name.text!
             viewCtrl.score = self.game.score
+            
+            // show the view
             self.navigationController?.show(viewCtrl, sender: self)
         })
         // Create button Cancel
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in
-            print("you have pressed the No button")
-            //Call another alert here
-        }
-        // add buttons to controller
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action:UIAlertAction!) in}
+        
+        // add all buttons
         alertController.addAction(ok)
         alertController.addAction(cancel)
         
-        // add text field
-        alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in
-        })
+        // add text field that will hold players name
+        alertController.addTextField(configurationHandler: {(_ textField: UITextField) -> Void in})
         
         self.present(alertController, animated: true, completion: nil)
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

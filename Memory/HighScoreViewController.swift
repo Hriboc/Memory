@@ -12,6 +12,7 @@ import CoreData
 class HighScoreViewController: UIViewController {
 
     @IBOutlet weak var highScoreTextView: UITextView!
+    @IBOutlet weak var deleteHighScoreButton: UIButton!
     
     var player = ""
     var score = 0
@@ -21,9 +22,9 @@ class HighScoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Style textView
-        highScoreTextView.layer.borderWidth = 1
-        highScoreTextView.layer.cornerRadius = 4
+        // Style textView and button
+        highScoreTextView.layer.cornerRadius = 8
+        deleteHighScoreButton.layer.cornerRadius = 6
         
         // Create database connection
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -76,13 +77,5 @@ class HighScoreViewController: UIViewController {
             NSLog("Failed deleting highscores: \(error)")
         }
     }
-    
-    
-    // Will be called every time View is about to appear on the screen.
-    /*override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-      
-    }*/
 
 }

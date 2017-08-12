@@ -11,7 +11,7 @@ import Foundation
 class Game {
     private let items = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9,10,10]
     
-    private var board = [Int]()//= Array(repeating: 0, count: 20)
+    private var board = [Int]()
     private var selectedPositions = [Int]()
     private var nSolvedItems = 0
     
