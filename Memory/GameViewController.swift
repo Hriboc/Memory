@@ -77,7 +77,6 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         
         cell.imgItem.image = nil
         cell.backgroundColor = UIColor.lightGray
-        //cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
         
         return cell
@@ -157,6 +156,7 @@ class GameViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
             let name = alertController.textFields![0] as UITextField
             viewCtrl.player = name.text!
             viewCtrl.score = self.game.score
+            viewCtrl.gameType = self.selectedGameType
             
             // show the view
             self.navigationController?.show(viewCtrl, sender: self)

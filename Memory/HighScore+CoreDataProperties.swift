@@ -2,7 +2,7 @@
 //  HighScore+CoreDataProperties.swift
 //  Memory
 //
-//  Created by Hristijan Bocevski on 2017-08-09.
+//  Created by Hristijan Bocevski on 2017-08-12.
 //  Copyright © 2017 Hristijan Bocevski. All rights reserved.
 //
 
@@ -18,5 +18,6 @@ extension HighScore {
 
     @NSManaged public var player: String?
     @NSManaged public var score: Int32
+    @NSManaged public var gameType: String?
 
 }

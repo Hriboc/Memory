@@ -40,6 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="LoadScreenImage" width="450" height="582"/>
+        <image name="LoadScreenImage" width="2604" height="3279"/>
     </resources>
 </document>

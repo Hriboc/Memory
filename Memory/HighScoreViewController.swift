@@ -16,6 +16,7 @@ class HighScoreViewController: UIViewController {
     
     var player = ""
     var score = 0
+    var gameType = ""
     
     private var managedContext : NSManagedObjectContext?
     
@@ -37,6 +38,7 @@ class HighScoreViewController: UIViewController {
             
             entity.player = player
             entity.score = Int32(score)
+            entity.gameType = gameType
             
             do {
                 try managedContext?.save()
@@ -55,7 +57,7 @@ class HighScoreViewController: UIViewController {
             
             var highScoresText = ""
             for highScore in sortedHighScores {
-                highScoresText.append("\(highScore.player!)\t\t\(highScore.score)\n"
+                highScoresText.append("\(highScore.player!)\t\(highScore.score)\t\t[\(highScore.gameType!)]\n"
 )           }
             highScoreTextView.text = highScoresText
         }
