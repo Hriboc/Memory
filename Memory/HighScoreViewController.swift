@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import CoreData
+//import CoreData
 
 class HighScoreViewController: UIViewController {
 
@@ -18,7 +18,7 @@ class HighScoreViewController: UIViewController {
     var score = 0
     var gameType = ""
     
-    private var managedContext : NSManagedObjectContext?
+    let coreDataManager = CoreDataManager.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,56 +27,22 @@ class HighScoreViewController: UIViewController {
         highScoreTextView.layer.cornerRadius = 8
         deleteHighScoreButton.layer.cornerRadius = 6
         
-        // Create database connection
+        // Needed for Core Data, to access the database
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        managedContext = appDelegate.persistentContainer.viewContext
+        coreDataManager.managedContext = appDelegate.persistentContainer.viewContext
         
-        // Save highscore to database if any presented
+        // Save high score
         if !player.isEmpty {
-            let description = NSEntityDescription.entity(forEntityName: "HighScore", in: managedContext!)!
-            let entity = NSManagedObject(entity: description, insertInto: managedContext) as! HighScore
-            
-            entity.player = player
-            entity.score = Int32(score)
-            entity.gameType = gameType
-            
-            do {
-                try managedContext?.save()
-            }
-            catch let error {
-                NSLog("Failed saving highscore: \(error)")
-            }
+            coreDataManager.saveHighScore(player: player, score: score, gameType: gameType)
         }
-        
-        // Fetch highscores from database
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HighScore")
-        
-        do {
-            let highScores = try managedContext?.fetch(request) as! [HighScore]
-            let sortedHighScores = highScores.sorted(by: {$0.score > $1.score})
-            
-            var highScoresText = ""
-            for highScore in sortedHighScores {
-                highScoresText.append("\(highScore.player!)\t\(highScore.score)\t\t[\(highScore.gameType!)]\n"
-)           }
-            highScoreTextView.text = highScoresText
-        }
-        catch let error {
-            NSLog("Failed getting highscores: \(error)")
-        }
+        // show high scores
+        highScoreTextView.text = coreDataManager.fetchHighScores()
     }
 
     @IBAction func deleteHighScores(_ sender: UIButton) {
         
-        let request = NSFetchRequest<NSFetchRequestResult>(entityName: "HighScore")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: request)
-        
-        do {
-            try managedContext?.execute(deleteRequest)
-            highScoreTextView.text = "";
-        }
-        catch let error {
-            NSLog("Failed deleting highscores: \(error)")
+        if coreDataManager.deleteHighScores() {
+            highScoreTextView.text = ""
         }
     }
 

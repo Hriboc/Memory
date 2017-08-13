@@ -18,7 +18,6 @@ class Game {
     var score = 0
     
     init() {
-        //board = Array(repeating: 0, count: items.count)
         newGame()
     }
     
@@ -66,7 +65,7 @@ class Game {
     }
     
     func isGameOver() -> Bool {
-        return nSolvedItems == items.count // 2
+        return nSolvedItems == items.count
     }
     
     private func findFreePosition() -> Int {
