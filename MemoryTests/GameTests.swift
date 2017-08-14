@@ -60,27 +60,4 @@ class GameTests: XCTestCase {
         XCTAssert(game?.score == 0, "expected 0 got \(game?.score)")
         XCTAssert(game?.isSelectedPair() == false)
     }
-    
-    // *** Database performace tests
-    
-    func testFetchHighScores() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let coreDataManager = CoreDataManager.shared
-        coreDataManager.managedContext = appDelegate.persistentContainer.viewContext
-        
-        self.measure {
-            coreDataManager.fetchHighScores()
-        }
-    }
-    
-    func testSaveHighScore() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let coreDataManager = CoreDataManager.shared
-        coreDataManager.managedContext = appDelegate.persistentContainer.viewContext
-        
-        self.measure {
-            coreDataManager.saveHighScore(player: "Performance_Test", score: 20, gameType: "N/A")
-        }
-    }
-    
 }

@@ -17,6 +17,7 @@
 		625755C41F33424900DD4CB7 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 625755C31F33424900DD4CB7 /* Game.swift */; };
 		6260D7491F4073B300E65381 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6260D7481F4073B300E65381 /* CoreDataManager.swift */; };
 		626D8D201F34CC3B0073A842 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 626D8D1F1F34CC3B0073A842 /* CollectionViewCell.swift */; };
+		62EB669D1F41832E00A160EC /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62EB669C1F41832E00A160EC /* CoreDataManagerTests.swift */; };
 		62F4F0471F3AFDC80096C63A /* HighScore+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F4F0451F3AFDC80096C63A /* HighScore+CoreDataClass.swift */; };
 		62F4F0481F3AFDC80096C63A /* HighScore+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F4F0461F3AFDC80096C63A /* HighScore+CoreDataProperties.swift */; };
 		62F742771F39D78900417669 /* HighScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F742761F39D78900417669 /* HighScoreViewController.swift */; };
@@ -47,6 +48,7 @@
 		625755C31F33424900DD4CB7 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		6260D7481F4073B300E65381 /* CoreDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		626D8D1F1F34CC3B0073A842 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		62EB669C1F41832E00A160EC /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
 		62F4F0451F3AFDC80096C63A /* HighScore+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HighScore+CoreDataClass.swift"; sourceTree = "<group>"; };
 		62F4F0461F3AFDC80096C63A /* HighScore+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HighScore+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		62F742761F39D78900417669 /* HighScoreViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighScoreViewController.swift; sourceTree = "<group>"; };
@@ -111,6 +113,7 @@
 			children = (
 				625755B51F33412000DD4CB7 /* GameTests.swift */,
 				625755B71F33412000DD4CB7 /* Info.plist */,
+				62EB669C1F41832E00A160EC /* CoreDataManagerTests.swift */,
 			);
 			path = MemoryTests;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				62EB669D1F41832E00A160EC /* CoreDataManagerTests.swift in Sources */,
 				625755B61F33412000DD4CB7 /* GameTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
